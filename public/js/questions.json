@@ -1,0 +1,347 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What does the acronym LASER stand for?",
+      "options": [
+        "Light Amplification by Simulated Emission of Radiation",
+        "Light Amplification by Stimulated Emission of Radiation",
+        "Light Absorption by Stimulated Emission of Radiation",
+        "Light Amplification by Synchronized Emission of Radiation"
+      ],
+      "correctAnswer": 1,
+      "category": "Basic Laser Concepts and Properties"
+    },
+    {
+      "id": 2,
+      "question": "Which of the following are key properties of laser light?",
+      "options": [
+        "Monochromaticity",
+        "Coherence",
+        "Directionality",
+        "High intensity"
+      ],
+      "correctAnswer": [0, 1, 2, 3],
+      "category": "Basic Laser Concepts and Properties"
+    },
+    {
+      "id": 3,
+      "question": "The coherence property of laser light refers to:",
+      "options": [
+        "Its ability to travel long distances without spreading",
+        "The light waves being in phase with each other",
+        "The light having a single wavelength",
+        "The intensity of the beam"
+      ],
+      "correctAnswer": 1,
+      "category": "Basic Laser Concepts and Properties"
+    },
+    {
+      "id": 4,
+      "question": "What creates the population inversion required for laser operation?",
+      "options": [
+        "Cooling the lasing medium",
+        "Pumping energy into the system",
+        "Reflecting light between mirrors",
+        "Filtering out unwanted wavelengths"
+      ],
+      "correctAnswer": 1,
+      "category": "Basic Laser Concepts and Properties"
+    },
+    {
+      "id": 5,
+      "question": "Which components are essential in a basic laser system?",
+      "options": [
+        "Active medium",
+        "Pumping mechanism",
+        "Optical resonator",
+        "Beam expander"
+      ],
+      "correctAnswer": [0, 1, 2],
+      "category": "Basic Laser Concepts and Properties"
+    },
+    {
+      "id": 6,
+      "question": "Which type of laser uses a mixture of gases like helium and neon as its gain medium?",
+      "options": [
+        "Semiconductor laser",
+        "Gas laser",
+        "Dye laser",
+        "Solid-state laser"
+      ],
+      "correctAnswer": 1,
+      "category": "Types of Lasers"
+    },
+    {
+      "id": 7,
+      "question": "Which of the following are examples of gas lasers?",
+      "options": [
+        "CO2 laser",
+        "Nd:YAG laser",
+        "Helium-neon laser",
+        "Argon ion laser"
+      ],
+      "correctAnswer": [0, 2, 3],
+      "category": "Types of Lasers"
+    },
+    {
+      "id": 8,
+      "question": "The active medium in a Ruby laser is:",
+      "options": [
+        "Ruby crystal (chromium-doped aluminum oxide)",
+        "Carbon dioxide gas",
+        "Gallium arsenide semiconductor",
+        "Organic dye solution"
+      ],
+      "correctAnswer": 0,
+      "category": "Types of Lasers"
+    },
+    {
+      "id": 9,
+      "question": "Which of these lasers is commonly used in barcode scanners and laser pointers?",
+      "options": [
+        "CO2 laser",
+        "Semiconductor diode laser",
+        "Excimer laser",
+        "Fiber laser"
+      ],
+      "correctAnswer": 1,
+      "category": "Types of Lasers"
+    },
+    {
+      "id": 10,
+      "question": "Fiber lasers use which of the following as their gain medium?",
+      "options": [
+        "Gases in a sealed tube",
+        "Semiconductor material",
+        "Doped optical fiber",
+        "Organic dye solution"
+      ],
+      "correctAnswer": 2,
+      "category": "Types of Lasers"
+    },
+    {
+      "id": 11,
+      "question": "According to laser safety standards, which class of lasers is considered safe under all conditions of normal use?",
+      "options": [
+        "Class 1",
+        "Class 2",
+        "Class 3R",
+        "Class 4"
+      ],
+      "correctAnswer": 0,
+      "category": "Laser Classifications and Safety"
+    },
+    {
+      "id": 12,
+      "question": "Class 4 lasers are characterized by:",
+      "options": [
+        "Power output greater than 500 mW",
+        "Ability to cause eye damage even from diffuse reflections",
+        "Fire hazard potential",
+        "Being completely safe for unprotected viewing"
+      ],
+      "correctAnswer": [0, 1, 2],
+      "category": "Laser Classifications and Safety"
+    },
+    {
+      "id": 13,
+      "question": "Which safety precautions should be taken when working with high-power lasers?",
+      "options": [
+        "Wearing appropriate protective eyewear",
+        "Using beam stops to terminate the primary beam",
+        "Installing warning signs at entrances to laser areas",
+        "Using reflective materials around the laser setup"
+      ],
+      "correctAnswer": [0, 1, 2],
+      "category": "Laser Classifications and Safety"
+    },
+    {
+      "id": 14,
+      "question": "Which types of lasers are commonly used in surgical procedures?",
+      "options": [
+        "CO2 lasers",
+        "Nd:YAG lasers",
+        "Excimer lasers",
+        "Diode lasers"
+      ],
+      "correctAnswer": [0, 1, 2, 3],
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 15,
+      "question": "LASIK eye surgery typically uses which type of laser?",
+      "options": [
+        "Ruby laser",
+        "Excimer laser",
+        "Dye laser",
+        "Helium-neon laser"
+      ],
+      "correctAnswer": 1,
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 16,
+      "question": "Which of the following everyday devices may use laser technology?",
+      "options": [
+        "DVD/Blu-ray players",
+        "Supermarket barcode scanners",
+        "Laser printers",
+        "Fiber optic communication systems"
+      ],
+      "correctAnswer": [0, 1, 2, 3],
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 17,
+      "question": "In manufacturing, CO2 lasers are primarily used for:",
+      "options": [
+        "Welding metals",
+        "Cutting non-metallic materials",
+        "Microscopic etching",
+        "Heating semiconductors"
+      ],
+      "correctAnswer": 1,
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 18,
+      "question": "Which wavelength range do most medical lasers operate in?",
+      "options": [
+        "X-ray (0.01-10 nm)",
+        "Ultraviolet (10-400 nm)",
+        "Visible and near-infrared (400-1400 nm)",
+        "Far-infrared (>1400 nm)"
+      ],
+      "correctAnswer": 2,
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 19,
+      "question": "LiDAR (Light Detection and Ranging) systems used in autonomous vehicles primarily use which type of laser?",
+      "options": [
+        "Chemical lasers",
+        "Solid-state lasers",
+        "Gas lasers",
+        "Free electron lasers"
+      ],
+      "correctAnswer": 1,
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 20,
+      "question": "Which of these applications use laser technology?",
+      "options": [
+        "Laser cooling of atoms",
+        "Holography",
+        "Laser fusion",
+        "Spectroscopy"
+      ],
+      "correctAnswer": [0, 1, 2, 3],
+      "category": "Laser Applications and Uses"
+    },
+    {
+      "id": 21,
+      "question": "The beam divergence of a laser refers to:",
+      "options": [
+        "How much the beam spreads as it travels",
+        "How deeply the beam can penetrate materials",
+        "How much power the beam loses over distance",
+        "How the beam changes color over distance"
+      ],
+      "correctAnswer": 0,
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 22,
+      "question": "Which factors determine the wavelength of a laser?",
+      "options": [
+        "The type of active medium used",
+        "The temperature of operation",
+        "The power of the pumping mechanism",
+        "The energy levels within the gain medium"
+      ],
+      "correctAnswer": [0, 3],
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 23,
+      "question": "What is the typical wavelength range for visible lasers?",
+      "options": [
+        "10-400 nm",
+        "400-700 nm",
+        "700-1400 nm",
+        "1400-10,000 nm"
+      ],
+      "correctAnswer": 1,
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 24,
+      "question": "Which of these represents an advantage of using lasers in manufacturing?",
+      "options": [
+        "Precision cutting without mechanical contact",
+        "Ability to process heat-sensitive materials",
+        "Reduced waste material",
+        "Lower energy consumption than conventional methods"
+      ],
+      "correctAnswer": [0, 2],
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 25,
+      "question": "The power of medical lasers used for tissue cutting typically falls in which range?",
+      "options": [
+        "1-10 mW",
+        "100 mW-1 W",
+        "1-100 W",
+        "Above 1 kW"
+      ],
+      "correctAnswer": 2,
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 26,
+      "question": "What property allows fiber lasers to transmit laser light over long distances with minimal loss?",
+      "options": [
+        "Total internal reflection",
+        "Atmospheric propagation",
+        "Quantum tunneling",
+        "Superconductivity"
+      ],
+      "correctAnswer": 0,
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 27,
+      "question": "Which of the following wavelengths are commonly used in telecommunications lasers?",
+      "options": [
+        "850 nm",
+        "1310 nm",
+        "1550 nm",
+        "All of the above"
+      ],
+      "correctAnswer": 3,
+      "category": "Laser Properties and Performance"
+    },
+    {
+      "id": 28,
+      "question": "The phenomenon responsible for laser light amplification is:",
+      "options": [
+        "Photoelectric effect",
+        "Stimulated emission",
+        "Spontaneous emission",
+        "Quantum entanglement"
+      ],
+      "correctAnswer": 1,
+      "category": "Laser Properties and Performance"
+    }
+  ],
+  "categories": [
+    "Basic Laser Concepts and Properties",
+    "Types of Lasers",
+    "Laser Classifications and Safety",
+    "Laser Applications and Uses",
+    "Laser Properties and Performance"
+  ]
+} 

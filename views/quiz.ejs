@@ -1,0 +1,346 @@
+<%- include('partials/header') %>
+
+<div class="animate-fadeIn" id="quiz-container">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+        <div class="mb-4 md:mb-0">
+            <h1 class="text-2xl font-bold text-gray-800">Laser Technology Quiz</h1>
+            <div class="question-counter mt-2" id="question-counter">Question 1 of 28</div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <div class="score-container flex items-center px-4 py-2">
+                <i class="fas fa-star text-yellow-400 mr-2"></i>
+                <span class="score-title">Score:</span>
+                <span class="score ml-2" id="score">0</span>
+            </div>
+            
+            <div class="timer" id="timer">60</div>
+        </div>
+    </div>
+    
+    <div id="category-badge" class="category-badge">Basic Laser Concepts and Properties</div>
+    
+    <div class="question-container">
+        <div class="question-text" id="question-text">Loading question...</div>
+        
+        <div class="options-container" id="options-container">
+            <div class="text-center py-8">
+                <div class="animate-spin inline-block w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
+                <p class="mt-4 text-gray-600">Loading options...</p>
+            </div>
+        </div>
+        
+        <div class="flex flex-col md:flex-row justify-between mt-6 space-y-4 md:space-y-0 md:space-x-4">
+            <button id="submit-btn" class="btn btn-primary py-3 px-6 flex items-center justify-center">
+                <i class="fas fa-check-circle mr-2"></i> Submit Answer
+            </button>
+            
+            <button id="next-btn" class="btn btn-secondary py-3 px-6 flex items-center justify-center" disabled>
+                <span>Next Question</span> <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="results-container hidden animate-fadeIn" id="results-container">
+    <i class="fas fa-trophy text-yellow-500 text-6xl mb-4"></i>
+    <h2 class="results-title">Quiz Completed!</h2>
+    <div class="results-score" id="final-score">0/28</div>
+    <p class="results-message" id="results-message">Thank you for completing the Laser Technology quiz!</p>
+    
+    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+        <a href="/quiz" class="btn btn-primary py-3 px-6 flex items-center justify-center">
+            <i class="fas fa-redo mr-2"></i> Take Quiz Again
+        </a>
+        
+        <a href="/dashboard" class="btn btn-secondary py-3 px-6 flex items-center justify-center">
+            <i class="fas fa-home mr-2"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/confetti-js/0.0.18/confetti.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hide results container initially
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        
+        // Initialize quiz
+        let currentQuestion = 0;
+        let score = 0;
+        let questions = [];
+        let timer = null;
+        let timeLeft = 60;
+        let selectedOptions = [];
+        let submittedAnswer = false;
+        
+        // Elements
+        const questionCounter = document.getElementById('question-counter');
+        const categoryBadge = document.getElementById('category-badge');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const timerElement = document.getElementById('timer');
+        const scoreElement = document.getElementById('score');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const finalScoreElement = document.getElementById('final-score');
+        const resultsMessageElement = document.getElementById('results-message');
+        
+        // Fetch questions
+        fetch('/js/questions.json')
+            .then(response => response.json())
+            .then(data => {
+                questions = data.questions;
+                displayQuestion();
+                startTimer();
+            })
+            .catch(error => {
+                console.error('Error fetching questions:', error);
+                questionText.textContent = 'Error loading questions. Please try again.';
+            });
+        
+        // Display current question
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            
+            // Update question counter
+            questionCounter.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            
+            // Update category badge
+            categoryBadge.textContent = question.category;
+            
+            // Display question text
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            selectedOptions = [];
+            
+            // Create option elements
+            question.options.forEach((option, index) => {
+                const optionItem = document.createElement('div');
+                optionItem.className = 'option-item flex items-center';
+                optionItem.dataset.index = index;
+                
+                // Create checkbox
+                const checkboxLabel = document.createElement('label');
+                checkboxLabel.className = 'custom-checkbox flex-1';
+                
+                const checkboxInput = document.createElement('input');
+                checkboxInput.type = 'checkbox';
+                checkboxInput.name = 'option';
+                checkboxInput.value = index;
+                checkboxInput.addEventListener('change', (e) => {
+                    // If not an array answer, deselect other options
+                    if (!Array.isArray(question.correctAnswer)) {
+                        const checkboxes = optionsContainer.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(cb => {
+                            if (cb !== e.target) {
+                                cb.checked = false;
+                            }
+                        });
+                        
+                        // Update selected options
+                        selectedOptions = e.target.checked ? [parseInt(e.target.value)] : [];
+                    } else {
+                        // For multiple answers, update selectedOptions array
+                        const optionIndex = parseInt(e.target.value);
+                        if (e.target.checked) {
+                            if (!selectedOptions.includes(optionIndex)) {
+                                selectedOptions.push(optionIndex);
+                            }
+                        } else {
+                            selectedOptions = selectedOptions.filter(opt => opt !== optionIndex);
+                        }
+                    }
+                    
+                    // Enable or disable submit button
+                    submitBtn.disabled = selectedOptions.length === 0;
+                });
+                
+                const checkmark = document.createElement('span');
+                checkmark.className = 'checkmark';
+                
+                const optionText = document.createElement('span');
+                optionText.textContent = option;
+                optionText.className = 'ml-2';
+                
+                checkboxLabel.appendChild(checkboxInput);
+                checkboxLabel.appendChild(checkmark);
+                checkboxLabel.appendChild(optionText);
+                
+                optionItem.appendChild(checkboxLabel);
+                optionsContainer.appendChild(optionItem);
+            });
+            
+            // Reset UI for new question
+            submittedAnswer = false;
+            submitBtn.disabled = true;
+            nextBtn.disabled = true;
+            resetTimer();
+        }
+        
+        // Start timer for current question
+        function startTimer() {
+            timeLeft = 60;
+            timerElement.textContent = timeLeft;
+            timerElement.classList.remove('warning');
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                // Warning when 10 seconds left
+                if (timeLeft <= 10 && !timerElement.classList.contains('warning')) {
+                    timerElement.classList.add('warning');
+                }
+                
+                // Time's up
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    checkAnswer(true);
+                }
+            }, 1000);
+        }
+        
+        // Reset timer
+        function resetTimer() {
+            clearInterval(timer);
+            startTimer();
+        }
+        
+        // Check answer
+        function checkAnswer(timeUp = false) {
+            clearInterval(timer);
+            submittedAnswer = true;
+            
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correctAnswer;
+            let isCorrect = false;
+            
+            // Get all option elements
+            const optionItems = optionsContainer.querySelectorAll('.option-item');
+            
+            // Check if answer is correct
+            if (Array.isArray(correctAnswer)) {
+                // Multiple correct answers
+                isCorrect = selectedOptions.length === correctAnswer.length && 
+                            correctAnswer.every(ans => selectedOptions.includes(ans));
+            } else {
+                // Single correct answer
+                isCorrect = selectedOptions.length === 1 && selectedOptions[0] === correctAnswer;
+            }
+            
+            // Highlight correct and incorrect answers
+            optionItems.forEach((item, index) => {
+                const isSelected = selectedOptions.includes(index);
+                const isCorrectOption = Array.isArray(correctAnswer) ? 
+                                        correctAnswer.includes(index) : 
+                                        index === correctAnswer;
+                
+                if (isCorrectOption) {
+                    item.classList.add('correct');
+                } else if (isSelected) {
+                    item.classList.add('incorrect');
+                }
+                
+                // Disable all checkboxes
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.disabled = true;
+            });
+            
+            // Update score if correct
+            if (isCorrect) {
+                score++;
+                scoreElement.textContent = score;
+                
+                // Show congratulatory message
+                const congratsMsg = document.createElement('div');
+                congratsMsg.className = 'mt-4 p-3 bg-green-100 text-green-700 rounded-lg animate-fadeIn';
+                congratsMsg.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Correct answer!';
+                optionsContainer.appendChild(congratsMsg);
+            } else {
+                // Show incorrect message
+                const incorrectMsg = document.createElement('div');
+                incorrectMsg.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-lg animate-fadeIn';
+                
+                if (timeUp) {
+                    incorrectMsg.innerHTML = '<i class="fas fa-clock mr-2"></i> Time\'s up! The correct answer is highlighted.';
+                } else {
+                    incorrectMsg.innerHTML = '<i class="fas fa-times-circle mr-2"></i> Incorrect. The correct answer is highlighted.';
+                }
+                
+                optionsContainer.appendChild(incorrectMsg);
+            }
+            
+            // Enable next button
+            submitBtn.disabled = true;
+            nextBtn.disabled = false;
+        }
+        
+        // Move to next question or end quiz
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+        
+        // End quiz and show results
+        function endQuiz() {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            
+            // Update final score
+            finalScoreElement.textContent = `${score}/${questions.length}`;
+            
+            // Generate results message based on score
+            const scorePercentage = (score / questions.length) * 100;
+            
+            if (scorePercentage >= 90) {
+                resultsMessageElement.textContent = 'Excellent! You have mastered Laser Technology concepts!';
+                // Add confetti effect for high scores
+                const confettiSettings = { target: 'confetti-canvas', max: 200, size: 1.5, animate: true };
+                const confettiCanvas = document.createElement('canvas');
+                confettiCanvas.id = 'confetti-canvas';
+                confettiCanvas.style.position = 'fixed';
+                confettiCanvas.style.top = '0';
+                confettiCanvas.style.left = '0';
+                confettiCanvas.style.width = '100%';
+                confettiCanvas.style.height = '100%';
+                confettiCanvas.style.pointerEvents = 'none';
+                confettiCanvas.style.zIndex = '100';
+                document.body.appendChild(confettiCanvas);
+                
+                const confetti = new ConfettiGenerator(confettiSettings);
+                confetti.render();
+                
+                setTimeout(() => {
+                    confetti.clear();
+                    document.body.removeChild(confettiCanvas);
+                }, 5000);
+            } else if (scorePercentage >= 70) {
+                resultsMessageElement.textContent = 'Great job! You have a solid understanding of Laser Technology!';
+            } else if (scorePercentage >= 50) {
+                resultsMessageElement.textContent = 'Good effort! You have a basic understanding of Laser Technology.';
+            } else {
+                resultsMessageElement.textContent = 'Keep learning! Review the Laser Technology concepts and try again.';
+            }
+        }
+        
+        // Event listeners
+        submitBtn.addEventListener('click', () => {
+            if (!submittedAnswer && selectedOptions.length > 0) {
+                checkAnswer();
+            }
+        });
+        
+        nextBtn.addEventListener('click', nextQuestion);
+    });
+</script>
+
+<%- include('partials/footer') %> 
