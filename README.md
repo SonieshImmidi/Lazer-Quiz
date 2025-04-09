@@ -92,3 +92,4 @@ To extend this project for real-world use:
 ## License
 
 MIT License # quiz-platform
+--------------------
